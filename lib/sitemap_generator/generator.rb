@@ -20,7 +20,7 @@ module SitemapGenerator
         # Path should be relative to RAILS_ROOT 
         file.gsub!(model_path, '')
         # Get the class from the filename
-        model = file.split('/').map{ |f| f.gsub('.rb', '').classify }.join('::').constantize
+        model = file.split('/').map{|f| f.gsub('.rb','').camelize unless f.empty?}.compact.join('::').constantize
         # Skip classes that don't have any sitemap options
         next if !model.methods.include?('sitemap_options') || model.sitemap_options == nil
 
